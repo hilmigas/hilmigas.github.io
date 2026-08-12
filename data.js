@@ -139,7 +139,7 @@ const portfolioData = {
       title: "FitGas — Gym Companion",
       category: "frontend",
       image: "/images/fitgas.jpg",
-      badge: "💪 Standalone Web App",
+      badge: "💪 Standalone Web App, just for view",
       coDev: "",
       coDevUrl: "",
       role: "Full-Stack Frontend Developer",
