@@ -131,7 +131,7 @@ const portfolioData = {
         "CSS3",
         "Game Dev"
       ],
-      githubLink: "https://github.com/HilmiGas",
+      githubLink: "https://github.com/hilmigas/HilmiGas.github.io/blob/main/snake.html",
       liveLink: "snake.html"
     },
     {
@@ -157,7 +157,7 @@ const portfolioData = {
         "LocalStorage",
         "Responsive Design"
       ],
-      githubLink: "https://github.com/HilmiGas",
+      githubLink: "https://github.com/hilmigas/HilmiGas.github.io/blob/main/gym-tracker.html",
       liveLink: "gym-tracker.html"
     }
   ]
