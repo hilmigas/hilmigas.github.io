@@ -63,13 +63,14 @@ const portfolioData = {
     }
     ,
     {
-      role: "Software Engineering Intern"
-      company: scrambleBit
-      location: "Istanbul, Turkey"
-      duration: "2025 - 2026"
+      role: "Software Engineering Intern",
+      company: "scrambleBit",
+      location: "Istanbul, Turkey",
+      duration: "2025 - 2026",
       description: [
         "learned frontend and backend from eng. Khaled and other engneers",
-        "learned php and laravel with full database systems"
+        "learned php and laravel with full database systems",
+        "learned for like 4 monthes the basics of software engineering in a very good way"
       ]
     }
   ],
