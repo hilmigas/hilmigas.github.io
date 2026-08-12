@@ -885,6 +885,14 @@ header.scrolled {
   font-weight: 900;
   color: var(--neon-green);
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  overflow: hidden; /* Ensures image respects the circle border */
+}
+
+.id-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .id-name {
