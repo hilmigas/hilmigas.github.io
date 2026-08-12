@@ -370,20 +370,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ? `<a href="${proj.coDevUrl || '#'}" target="_blank" class="project-codev-badge">${proj.coDev}</a>`
           : '';
 
-        const liveActionHtml = proj.liveLink && proj.liveLink !== '#'
-          ? `<a href="${proj.liveLink}" target="_blank" class="proj-action-btn" title="Live Preview">
-              <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-             </a>`
-          : '';
-
         const headerHtml = proj.image ? `
-          <div class="project-img-wrap">
-            <img class="project-img" src="${proj.image}" alt="${proj.title}" loading="lazy">
-            <div class="project-overlay">
-              <a href="${proj.githubLink}" target="_blank" class="proj-action" title="GitHub Repository">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.523-10-10-10z"/></svg>
-              </a>
-            </div>
+          <div class="project-img-wrap" id="img-wrap-${proj.id}">
+            <img class="project-img" src="${proj.image}" alt="${proj.title}" loading="lazy" onerror="document.getElementById('img-wrap-${proj.id}').style.display='none'">
           </div>
         ` : `
           <div class="project-header-bar">
@@ -391,34 +380,40 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="p-dot dot-red"></span>
               <span class="p-dot dot-yellow"></span>
               <span class="p-dot dot-green"></span>
-              <span class="p-header-label">// PROJECT repository</span>
-            </div>
-            <div class="project-header-actions">
-              <a href="${proj.githubLink}" target="_blank" class="proj-action-btn" title="GitHub Repository">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.523-10-10-10z"/></svg>
-                <span>Code</span>
-              </a>
-              ${liveActionHtml}
+              <span class="p-header-label">// PROJECT</span>
             </div>
           </div>
         `;
 
+        const githubBtn = `<a href="${proj.githubLink}" target="_blank" class="card-btn github-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.523-10-10-10z"/></svg>
+          GitHub Code
+        </a>`;
+
+        const liveBtn = proj.liveLink && proj.liveLink !== '#'
+          ? `<a href="${proj.liveLink}" target="_blank" class="card-btn live-btn">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+               Live App
+             </a>`
+          : '';
+
         card.innerHTML = `
           ${headerHtml}
-          <div class="project-body">
+          <div class="project-body" style="display: flex; flex-direction: column; flex: 1;">
             <div class="project-badges-row">
               ${proj.badge ? `<span class="project-badge">${proj.badge}</span>` : ''}
               ${coDevHtml}
             </div>
             <div class="project-title-row">
               <h3 class="project-name">${proj.title}</h3>
-              <a href="${proj.githubLink}" target="_blank" class="project-github-icon" title="View Source on GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
             </div>
             <p class="project-desc">${proj.description}</p>
             ${highlightsHtml}
             <div class="project-tags">${tagsHtml}</div>
+            <div class="project-actions-bottom" style="margin-top: auto; padding-top: 24px; display: flex; gap: 12px;">
+              ${githubBtn}
+              ${liveBtn}
+            </div>
           </div>
         `;
         projectsGrid.appendChild(card);

@@ -79,18 +79,20 @@ const portfolioData = {
   projects: [
     {
       id: "attendify",
-      title: "Attendify",
+      title: "Attendify — Next-Gen AI Attendance",
       category: "ai",
-      badge: "⭐ Capstone Project",
+      image: "/images/attendify.png",
+      badge: "Capstone",
       coDev: "🤝 Co-Developed with @ibrahemassa and @MoBakour",
       coDevUrl: "https://github.com/MoBakour",
-      role: "AI & Backend Architecture",
-      description: "An intelligent, anti-cheat attendance tracking system achieving real presence validation in under 3 seconds. Built to solve the fundamental problem of proxy attendance through a triple-layer verification architecture.",
+      role: "AI Core & Backend Architecture Lead",
+      description: "An intelligent, anti-cheat attendance tracking system achieving real presence validation in under 3 seconds. Built to solve the fundamental problem of proxy attendance through a highly secure, triple-layer verification architecture. Attendify represents the future of automated classroom and enterprise management.",
       highlights: [
-        "Cryptographic time-limited tokens to stop photo-sharing cheats",
-        "GPS geofencing via the Haversine formula for physical classroom presence",
-        "Biometric AI face-matching using 512-dim FaceNet embeddings + pgvector cosine distance",
-        "Sub-50ms vector search using HNSW indexing on PostgreSQL"
+        "🔐 Cryptographic time-limited tokens to actively prevent photo-sharing and replay attacks",
+        "🌍 Precision GPS geofencing utilizing the Haversine formula for foolproof physical presence verification",
+        "🧠 Biometric AI face-matching leveraging 512-dimensional FaceNet embeddings paired with pgvector cosine distance",
+        "⚡ Sub-50ms vector search latency achieved via HNSW indexing on a high-performance PostgreSQL database",
+        "📊 Comprehensive real-time analytics dashboard providing actionable insights for administrators"
       ],
       tags: [
         "Go (Gin-Gonic)",
@@ -102,73 +104,61 @@ const portfolioData = {
         "PostgreSQL",
         "pgvector",
         "HNSW",
-        "Laravel"
+        "Laravel",
+        "Docker"
       ],
       githubLink: "https://github.com/MoBakour/attendify",
       liveLink: "#"
     },
     {
-      id: "vision-pipeline",
-      title: "Biometric Vision & Detection Engine",
-      category: "ai",
-      badge: "⚡ Computer Vision",
-      description: "High-accuracy face detection and feature extraction service using Python and OpenCV, designed for real-time verification pipelines and automated logging.",
+      id: "snake-game",
+      title: "Retro Snake Game",
+      category: "frontend",
+      image: "/images/snake_test.png",
+      badge: "🎮 Interactive Web Game",
+      coDev: "",
+      coDevUrl: "",
+      role: "Frontend Developer",
+      description: "A classic, fully playable Snake game built directly in the browser using HTML5 Canvas and Vanilla JavaScript. Features a modern dark-mode UI with smooth animations.",
       highlights: [
-        "Real-time face detection & alignment pipeline with multi-frame verification",
-        "RESTful API interface for seamless integration into web and mobile clients",
-        "Optimized frame processing throughput minimizing CPU/GPU latency"
+        "🕹️ Built with pure HTML5 Canvas for high-performance rendering",
+        "⚡ Implemented custom game loop utilizing requestAnimationFrame",
+        "🎨 Modern, glowing dark-theme aesthetics tailored for gamers"
       ],
       tags: [
-        "Python",
-        "OpenCV",
-        "FastAPI",
-        "PyTorch",
-        "REST APIs"
+        "JavaScript",
+        "HTML5 Canvas",
+        "CSS3",
+        "Game Dev"
       ],
       githubLink: "https://github.com/HilmiGas",
-      liveLink: "#"
+      liveLink: "snake.html"
     },
     {
-      id: "laravel-management",
-      title: "Enterprise Portal & Reporting System",
-      category: "backend",
-      badge: "🛠️ Full-Stack Backend",
-      description: "Robust admin and reporting dashboard built with Laravel & PHP for managing attendance records, automated exports, and role-based access control.",
+      id: "gym-tracker",
+      title: "FitGas — Gym Companion",
+      category: "frontend",
+      image: "/images/fitgas.jpg",
+      badge: "💪 Standalone Web App",
+      coDev: "",
+      coDevUrl: "",
+      role: "Full-Stack Frontend Developer",
+      description: "A premium, standalone gym companion app featuring a TDEE calorie calculator with macro breakdowns, an interactive workout calendar for scheduling and logging exercises, and a full stats dashboard — all powered by client-side JavaScript with persistent LocalStorage.",
       highlights: [
-        "Role-Based Access Control (RBAC) supporting multiple administrative levels",
-        "Automated attendance export pipelines (PDF, Excel, CSV) with audit trails",
-        "Optimized relational database queries supporting heavy analytics loads"
+        "🔥 TDEE Calorie Calculator with protein, carbs & fat macro targets for cut/maintain/bulk goals",
+        "📅 Interactive workout calendar — click any date to log sets, reps, and weights",
+        "📊 Stats & History dashboard tracking total volume, active days, and monthly progress",
+        "📱 Fully responsive with sidebar navigation that feels like a native app"
       ],
       tags: [
-        "Laravel",
-        "PHP",
-        "MySQL / PostgreSQL",
-        "REST APIs",
-        "Blade / HTML5"
+        "JavaScript",
+        "HTML5",
+        "CSS3",
+        "LocalStorage",
+        "Responsive Design"
       ],
       githubLink: "https://github.com/HilmiGas",
-      liveLink: "#"
-    },
-    {
-      id: "cpp-allocator",
-      title: "High-Speed Memory & Vector Indexer",
-      category: "systems",
-      badge: "💻 Systems & C++",
-      description: "Low-level memory management system and custom vector search data structures implemented in modern C++ for high-performance computing.",
-      highlights: [
-        "Custom memory pool allocation minimizing runtime dynamic allocation overhead",
-        "Efficient nearest-neighbor search algorithm implementation",
-        "Cross-platform CLI tool with strict memory leak verification"
-      ],
-      tags: [
-        "C++",
-        "Algorithms",
-        "Data Structures",
-        "Memory Management",
-        "Git"
-      ],
-      githubLink: "https://github.com/HilmiGas",
-      liveLink: "#"
+      liveLink: "gym-tracker.html"
     }
   ]
 };
