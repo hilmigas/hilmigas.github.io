@@ -50,15 +50,26 @@ const portfolioData = {
   ],
   experience: [
     {
-      role: "Capstone Project Lead",
+      role: "Capstone Project",
       company: "Istinye University",
       location: "Istanbul, Turkey",
-      duration: "2024 - 2025",
+      duration: "2025 - 2026",
       description: [
         "Led development of an AI-powered smart attendance system using facial recognition.",
         "Integrated Python + OpenCV-based computer vision pipeline for real-time face detection.",
         "Built a full admin dashboard with Laravel + PHP backend for reporting and management.",
         "Delivered the project with a top academic score, recognized for technical excellence."
+      ]
+    }
+    ,
+    {
+      role: "Software Engineering Intern"
+      company: scrambleBit
+      location: "Istanbul, Turkey"
+      duration: "2025 - 2026"
+      description: [
+        "learned frontend and backend from eng. Khaled and other engneers",
+        "learned php and laravel with full database systems"
       ]
     }
   ],
@@ -67,7 +78,7 @@ const portfolioData = {
       degree: "B.S. in Software Engineering — Honor Degree",
       institution: "Istinye University",
       location: "Istanbul, Turkey",
-      duration: "2021 - 2025",
+      duration: "2022 - 2026",
       gpa: "Honor Graduate",
       achievements: [
         "Graduated with Honors",
