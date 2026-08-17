@@ -14,7 +14,7 @@ const portfolioData = {
     location: "Istanbul, Turkey",
     github: "https://github.com/HilmiGas",
     linkedin: "https://www.linkedin.com/in/helmi-sayed-suleiman-8134b8242/",
-    cvLink: "#"
+    cvLink: "files/Helmi_Sayed_Suleiman_CV.pdf"
   },
   skills: [
     {
