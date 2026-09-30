@@ -3,51 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Course Factory AI - Prototype</title>
+  <title>Bigben Course Factory - AI Prototype</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bigben: {
+              gold: '#c59b27',
+              goldhover: '#dcb13a',
+              dark: '#111111',
+              panel: '#1a1a1a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Cinzel', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* Slate 900 */
+      background-color: #111111;
       color: #f8fafc;
+      background-image: radial-gradient(circle at top, #1a1a1a 0%, #111111 100%);
+      font-family: 'Inter', sans-serif;
     }
     
     .glass-panel {
-      background: rgba(30, 41, 59, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #333;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
     }
     
-    .gradient-text {
-      background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .gold-text {
+      color: #c59b27;
     }
 
-    .animated-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      overflow: hidden;
-      z-index: -1;
+    .btn-gold {
+      background-color: #c59b27;
+      color: #000;
+      transition: all 0.3s ease;
     }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      animation: float 10s infinite ease-in-out alternate;
-    }
-    
-    .orb-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #3b82f6; }
-    .orb-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: #8b5cf6; animation-delay: -5s; }
-
-    @keyframes float {
-      0% { transform: translateY(0px) scale(1); }
-      100% { transform: translateY(40px) scale(1.1); }
+    .btn-gold:hover {
+      background-color: #dcb13a;
+      box-shadow: 0 0 20px rgba(197, 155, 39, 0.3);
+      transform: translateY(-2px);
     }
 
     .hidden-state { display: none; }
@@ -60,92 +65,141 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Graphical Roadmap Styles */
+    .roadmap-container {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .roadmap-container::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: 0;
+      left: 11px;
+      width: 2px;
+      background: #333;
+      z-index: 1;
+    }
+    .roadmap-node {
+      position: relative;
+      margin-bottom: 2.5rem;
+      z-index: 2;
+    }
+    .roadmap-node::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.25rem;
+      width: 24px;
+      height: 24px;
+      background: #111;
+      border: 3px solid #c59b27;
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: 0 0 15px rgba(197, 155, 39, 0.3);
+      transition: all 0.3s ease;
+    }
+    .roadmap-node:hover::before {
+      background: #c59b27;
+      box-shadow: 0 0 20px rgba(197, 155, 39, 0.6);
+    }
+    .roadmap-node:last-child {
+      margin-bottom: 0;
+    }
+    
+    .loading-ring {
+      border-color: #333;
+      border-top-color: #c59b27;
+    }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
-
-  <!-- Background Effects -->
-  <div class="animated-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-  </div>
 
   <div class="w-full max-w-4xl">
     
     <!-- Header -->
     <div class="text-center mb-10">
-      <div class="inline-flex items-center justify-center px-4 py-1.5 mb-4 rounded-full glass-panel text-sm font-medium text-blue-300">
-        <span class="flex w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
-        AI-Powered Prototype
+      <div class="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded glass-panel text-xs font-semibold gold-text uppercase tracking-widest border border-bigben-gold/30">
+        <span class="flex w-2 h-2 rounded-full bg-bigben-gold mr-2 animate-pulse"></span>
+        Precision to build the future
       </div>
-      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
-        Course <span class="gradient-text">Factory</span>
+      <h1 class="text-4xl md:text-5xl font-serif tracking-wide mb-4">
+        BIG BEN <span class="gold-text font-bold">COURSE FACTORY</span>
       </h1>
-      <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
-        Transform any idea into a structured, production-ready course curriculum in seconds using our AI engine.
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Intelligently structure training programs in seconds. Enter a topic to generate a comprehensive graphical roadmap.
       </p>
     </div>
 
     <!-- Main Card -->
-    <div class="glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+    <div class="glass-panel rounded-sm p-6 md:p-10 relative overflow-hidden">
       
       <!-- Input Section -->
       <div id="input-section" class="space-y-6">
         <div>
-          <label for="topic" class="block text-sm font-semibold text-slate-300 mb-2">What do you want to teach?</label>
+          <label for="topic" class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Training Course Topic</label>
           <input type="text" id="topic" 
-                 class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-lg"
-                 placeholder="e.g. Advanced Python for Data Science" autocomplete="off">
+                 class="w-full bg-[#111] border border-gray-700 rounded p-4 text-white placeholder-gray-600 focus:outline-none focus:border-bigben-gold focus:ring-1 focus:ring-bigben-gold transition-all text-lg"
+                 placeholder="e.g. Sustainable Local Development" autocomplete="off">
         </div>
         
         <button id="generate-btn" 
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 flex justify-center items-center gap-2 group">
-          <span>Generate Curriculum</span>
-          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                class="w-full btn-gold font-bold py-4 rounded flex justify-center items-center gap-2 group uppercase tracking-wider text-sm">
+          <span>Generate Roadmap</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
       </div>
 
       <!-- Loading State -->
       <div id="loading-section" class="hidden-state py-12 flex flex-col items-center justify-center text-center">
-        <div class="relative w-20 h-20 mb-6">
-          <div class="absolute inset-0 rounded-full border-4 border-slate-700"></div>
-          <div class="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
+        <div class="relative w-16 h-16 mb-6">
+          <div class="absolute inset-0 rounded-full border-4 loading-ring animate-spin"></div>
           <div class="absolute inset-0 flex items-center justify-center">
-            <svg class="w-8 h-8 text-blue-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+            <svg class="w-6 h-6 gold-text animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path></svg>
           </div>
         </div>
-        <h3 class="text-xl font-bold text-white mb-2">Analyzing Subject Matter...</h3>
-        <p class="text-slate-400" id="loading-text">Synthesizing optimal learning path</p>
+        <h3 class="text-xl font-bold text-white mb-2 font-serif uppercase tracking-wider">Structuring Program...</h3>
+        <p class="text-gray-400" id="loading-text">Analyzing training objectives</p>
       </div>
 
       <!-- Result Section -->
       <div id="result-section" class="hidden-state">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Curriculum Ready
+        <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
+          <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-3 uppercase tracking-wide">
+            <svg class="w-6 h-6 gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Generated Roadmap
           </h2>
-          <button id="reset-btn" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">
-            Start Over
+          <button id="reset-btn" class="text-gray-400 hover:text-bigben-gold transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-gray-700 hover:border-bigben-gold rounded px-3 py-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            Build Another
           </button>
         </div>
         
-        <div class="mb-4 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-200">
-          <strong>Topic:</strong> <span id="display-topic" class="text-white font-semibold"></span>
+        <div class="mb-8 p-5 rounded bg-[#111] border border-bigben-gold/30 flex items-center gap-4">
+          <div class="w-12 h-12 rounded bg-bigben-gold/10 flex items-center justify-center shrink-0">
+             <svg class="w-6 h-6 gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+          </div>
+          <div>
+            <span class="text-gray-400 text-xs uppercase tracking-wide font-bold">Target Training Program</span>
+            <div id="display-topic" class="text-white font-bold text-xl mt-1 font-serif"></div>
+          </div>
         </div>
 
-        <div class="space-y-4" id="modules-container">
+        <!-- The Visual Roadmap -->
+        <div class="roadmap-container" id="modules-container">
           <!-- Modules will be injected here via JS -->
         </div>
+        
       </div>
       
     </div>
     
     <!-- Footer/Return -->
-    <div class="text-center mt-8">
-      <a href="index.html" class="inline-flex items-center text-slate-400 hover:text-white transition-colors">
+    <div class="text-center mt-12">
+      <a href="index.html" class="inline-flex items-center text-gray-500 hover:text-white transition-colors uppercase tracking-wider text-xs font-bold">
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        Back to Portfolio
+        Return to Portfolio
       </a>
     </div>
 
@@ -164,9 +218,10 @@
       const loadingText = document.getElementById('loading-text');
 
       const loadingMessages = [
-        "Synthesizing optimal learning path...",
-        "Structuring lesson modules...",
-        "Finalizing curriculum details..."
+        "Analyzing training objectives...",
+        "Structuring learning phases...",
+        "Drafting curriculum milestones...",
+        "Finalizing graphical roadmap..."
       ];
 
       generateBtn.addEventListener('click', processGeneration);
@@ -200,7 +255,7 @@
         const msgInterval = setInterval(() => {
           msgIndex = (msgIndex + 1) % loadingMessages.length;
           loadingText.innerText = loadingMessages[msgIndex];
-        }, 800);
+        }, 600);
 
         // Fake AI processing delay
         setTimeout(() => {
@@ -213,19 +268,22 @@
       function showResults(topic) {
         displayTopic.innerText = topic;
         
-        // Mock data logic
+        // Mock data logic tailored to a "Training Center"
         const modules = [
           {
-            title: `Module 1: Foundations of ${topic}`,
-            lessons: ["Introduction & Overview", "Core Terminology", "Setting Up Your Environment"]
+            title: `Phase 1: Foundations of ${topic}`,
+            duration: "Day 1-2",
+            lessons: ["Introduction & Key Concepts", "Industry Standards & Frameworks", "Initial Assessment"]
           },
           {
-            title: "Module 2: Practical Application",
-            lessons: ["First Exercises", "Best Practices & Workflows", "Common Pitfalls to Avoid"]
+            title: "Phase 2: Strategic Application",
+            duration: "Day 3-4",
+            lessons: ["Real-world Case Studies", "Best Practices Implementation", "Interactive Workshops"]
           },
           {
-            title: "Module 3: Advanced Concepts & Project",
-            lessons: ["Real-world Case Studies", "Building the Final Project", "Review & Next Steps"]
+            title: "Phase 3: Mastery & Certification",
+            duration: "Day 5",
+            lessons: ["Final Project Development", "Performance Evaluation", "Certification Readiness"]
           }
         ];
 
@@ -233,19 +291,24 @@
         
         modules.forEach((mod, idx) => {
           const modEl = document.createElement('div');
-          modEl.className = 'bg-slate-800/80 border border-slate-700 rounded-xl p-5 fade-in';
+          modEl.className = 'roadmap-node fade-in';
           modEl.style.animationDelay = `${idx * 0.15}s`;
           
           let lessonsHtml = mod.lessons.map(lesson => `
-            <li class="flex items-start text-slate-300">
-              <svg class="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <li class="flex items-start text-gray-300 text-sm">
+              <svg class="w-4 h-4 gold-text mr-2 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
               <span>${lesson}</span>
             </li>
           `).join('');
 
           modEl.innerHTML = `
-            <h3 class="text-lg font-bold text-white mb-4 border-b border-slate-700 pb-2">${mod.title}</h3>
-            <ul class="space-y-3">${lessonsHtml}</ul>
+            <div class="bg-[#1a1a1a] border border-gray-800 rounded p-5 hover:border-bigben-gold/50 transition-colors ml-4">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-serif font-bold text-white">${mod.title}</h3>
+                <span class="text-xs font-bold uppercase tracking-wider text-black bg-bigben-gold px-2 py-1 rounded-sm">${mod.duration}</span>
+              </div>
+              <ul class="space-y-2 mt-4 border-t border-gray-800 pt-3">${lessonsHtml}</ul>
+            </div>
           `;
           
           modulesContainer.appendChild(modEl);
