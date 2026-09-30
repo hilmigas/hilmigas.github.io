@@ -171,6 +171,32 @@ const portfolioData = {
       ],
       githubLink: "https://github.com/hilmigas/HilmiGas.github.io/blob/main/gym-tracker.html",
       liveLink: "gym-tracker.html"
+    },
+    {
+      id: "course-factory",
+      title: "Course Factory AI",
+      category: "frontend",
+      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop",
+      badge: "🚀 Rapid AI Prototype",
+      coDev: "",
+      coDevUrl: "",
+      role: "Frontend Developer",
+      description: "A high-fidelity prototype demonstrating an AI-powered course generator. Users can input any subject, and the system synthesizes a structured, multi-module learning curriculum in seconds. Designed with a premium, glassmorphism UI.",
+      highlights: [
+        "✨ Premium UI/UX using Tailwind CSS and glassmorphism techniques",
+        "🧠 Simulates AI processing with dynamic loading states and sequential generation",
+        "⚡ Zero-dependency standalone architecture for instant load times",
+        "📱 Fully responsive design that looks stunning on mobile and desktop"
+      ],
+      tags: [
+        "HTML5",
+        "Tailwind CSS",
+        "JavaScript",
+        "Prototyping",
+        "UI/UX"
+      ],
+      githubLink: "https://github.com/hilmigas/HilmiGas.github.io/blob/main/course-factory.html",
+      liveLink: "course-factory.html"
     }
   ]
 };
