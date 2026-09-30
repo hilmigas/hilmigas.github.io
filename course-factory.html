@@ -16,6 +16,7 @@
               goldhover: '#dcb13a',
               dark: '#111111',
               panel: '#1a1a1a',
+              charcoal: '#1e232e',
             }
           },
           fontFamily: {
@@ -40,9 +41,7 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.8);
     }
     
-    .gold-text {
-      color: #c59b27;
-    }
+    .gold-text { color: #c59b27; }
 
     .btn-gold {
       background-color: #c59b27;
@@ -57,61 +56,82 @@
 
     .hidden-state { display: none; }
     
-    .fade-in {
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-
+    .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Graphical Roadmap Styles */
+    /* Category Pills */
+    .cat-pill {
+      background: #1e232e;
+      border: 1px solid #333;
+      padding: 0.4rem 0.85rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: #c59b27;
+      color: #000;
+      border-color: #c59b27;
+      box-shadow: 0 0 12px rgba(197,155,39,0.2);
+    }
+
+    /* Graphical Roadmap */
     .roadmap-container {
       position: relative;
-      padding-left: 2rem;
+      padding-left: 2.5rem;
     }
     .roadmap-container::before {
       content: '';
       position: absolute;
-      top: 10px;
-      bottom: 0;
+      top: 12px;
+      bottom: 12px;
       left: 11px;
       width: 2px;
-      background: #333;
+      background: linear-gradient(to bottom, #c59b27, #333, #c59b27);
       z-index: 1;
     }
     .roadmap-node {
       position: relative;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
       z-index: 2;
     }
     .roadmap-node::before {
       content: '';
       position: absolute;
-      left: -2rem;
-      top: 0.25rem;
-      width: 24px;
-      height: 24px;
+      left: -2.5rem;
+      top: 1.3rem;
+      width: 22px;
+      height: 22px;
       background: #111;
       border: 3px solid #c59b27;
       border-radius: 50%;
       z-index: 2;
-      box-shadow: 0 0 15px rgba(197, 155, 39, 0.3);
+      box-shadow: 0 0 12px rgba(197, 155, 39, 0.3);
       transition: all 0.3s ease;
     }
     .roadmap-node:hover::before {
       background: #c59b27;
       box-shadow: 0 0 20px rgba(197, 155, 39, 0.6);
     }
-    .roadmap-node:last-child {
-      margin-bottom: 0;
-    }
+    .roadmap-node:last-child { margin-bottom: 0; }
     
     .loading-ring {
       border-color: #333;
       border-top-color: #c59b27;
     }
+
+    /* Category Grid Scrollbar */
+    .cat-scroll::-webkit-scrollbar { height: 4px; }
+    .cat-scroll::-webkit-scrollbar-track { background: #1a1a1a; }
+    .cat-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
@@ -128,7 +148,7 @@
         BIG BEN <span class="gold-text font-bold">COURSE FACTORY</span>
       </h1>
       <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-        Intelligently structure training programs in seconds. Enter a topic to generate a comprehensive graphical roadmap.
+        Intelligently structure training programs in seconds. Select a category or type a custom topic to generate a professional roadmap.
       </p>
     </div>
 
@@ -137,8 +157,22 @@
       
       <!-- Input Section -->
       <div id="input-section" class="space-y-6">
+
+        <!-- Category Selection -->
         <div>
-          <label for="topic" class="block text-sm font-semibold text-gray-300 mb-2 uppercase tracking-wide">Training Course Topic</label>
+          <label class="block text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">Select a Category</label>
+          <div class="flex flex-wrap gap-2 max-h-48 overflow-y-auto cat-scroll pr-2" id="category-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="h-px flex-1 bg-gray-700"></div>
+          <span class="text-gray-500 text-xs uppercase tracking-widest font-bold">or type custom</span>
+          <div class="h-px flex-1 bg-gray-700"></div>
+        </div>
+
+        <div>
           <input type="text" id="topic" 
                  class="w-full bg-[#111] border border-gray-700 rounded p-4 text-white placeholder-gray-600 focus:outline-none focus:border-bigben-gold focus:ring-1 focus:ring-bigben-gold transition-all text-lg"
                  placeholder="e.g. Sustainable Local Development" autocomplete="off">
@@ -166,16 +200,17 @@
       <!-- Result Section -->
       <div id="result-section" class="hidden-state">
         <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
-          <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-3 uppercase tracking-wide">
-            <svg class="w-6 h-6 gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <h2 class="text-xl md:text-2xl font-serif font-bold text-white flex items-center gap-3 uppercase tracking-wide">
+            <svg class="w-6 h-6 gold-text shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             Generated Roadmap
           </h2>
-          <button id="reset-btn" class="text-gray-400 hover:text-bigben-gold transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-gray-700 hover:border-bigben-gold rounded px-3 py-1">
+          <button id="reset-btn" class="text-gray-400 hover:text-bigben-gold transition-colors text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-gray-700 hover:border-bigben-gold rounded px-3 py-1.5 shrink-0">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             Build Another
           </button>
         </div>
         
+        <!-- Topic Banner -->
         <div class="mb-8 p-5 rounded bg-[#111] border border-bigben-gold/30 flex items-center gap-4">
           <div class="w-12 h-12 rounded bg-bigben-gold/10 flex items-center justify-center shrink-0">
              <svg class="w-6 h-6 gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
@@ -186,10 +221,28 @@
           </div>
         </div>
 
-        <!-- The Visual Roadmap -->
-        <div class="roadmap-container" id="modules-container">
-          <!-- Modules will be injected here via JS -->
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div class="bg-[#1e232e] rounded p-3 text-center border border-gray-800">
+            <div class="text-2xl font-bold gold-text" id="stat-modules">5</div>
+            <div class="text-xs text-gray-400 uppercase tracking-wide mt-1">Modules</div>
+          </div>
+          <div class="bg-[#1e232e] rounded p-3 text-center border border-gray-800">
+            <div class="text-2xl font-bold gold-text" id="stat-lessons">15</div>
+            <div class="text-xs text-gray-400 uppercase tracking-wide mt-1">Lessons</div>
+          </div>
+          <div class="bg-[#1e232e] rounded p-3 text-center border border-gray-800">
+            <div class="text-2xl font-bold gold-text">5</div>
+            <div class="text-xs text-gray-400 uppercase tracking-wide mt-1">Days</div>
+          </div>
+          <div class="bg-[#1e232e] rounded p-3 text-center border border-gray-800">
+            <div class="text-2xl font-bold gold-text">€3,800</div>
+            <div class="text-xs text-gray-400 uppercase tracking-wide mt-1">Est. Price</div>
+          </div>
         </div>
+
+        <!-- The Visual Roadmap -->
+        <div class="roadmap-container" id="modules-container"></div>
         
       </div>
       
@@ -216,22 +269,80 @@
       const displayTopic = document.getElementById('display-topic');
       const modulesContainer = document.getElementById('modules-container');
       const loadingText = document.getElementById('loading-text');
+      const categoryGrid = document.getElementById('category-grid');
+
+      // Real categories from bigben-training.com
+      const categories = [
+        "Artificial Intelligence",
+        "Cyber Security",
+        "Project Management",
+        "Leadership",
+        "Digital Transformation",
+        "Data Management",
+        "Human Resources Management",
+        "Marketing",
+        "Accounting and Finance",
+        "Business Intelligence",
+        "Customer Service",
+        "Quality Management",
+        "Health, Safety and Environment",
+        "Procurement and Supply Chain",
+        "Oil and Gas Engineering",
+        "Construction Management",
+        "Sustainability",
+        "Innovation",
+        "Tourism Management",
+        "Logistics",
+        "ISO Standards",
+        "Sales",
+        "Professional Skills",
+        "Governance, Risk and Compliance",
+        "Banking & Insurance",
+        "IT Management",
+        "Aviation",
+        "Contracts Management",
+        "Budgeting",
+        "C-Suite Executive"
+      ];
+
+      // Populate category pills
+      let selectedCategory = null;
+      categories.forEach(cat => {
+        const pill = document.createElement('button');
+        pill.className = 'cat-pill text-gray-300';
+        pill.textContent = cat;
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          selectedCategory = cat;
+          topicInput.value = '';
+        });
+        categoryGrid.appendChild(pill);
+      });
 
       const loadingMessages = [
         "Analyzing training objectives...",
+        "Mapping competency frameworks...",
         "Structuring learning phases...",
         "Drafting curriculum milestones...",
         "Finalizing graphical roadmap..."
       ];
 
       generateBtn.addEventListener('click', processGeneration);
-      
       topicInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') processGeneration();
+      });
+      topicInput.addEventListener('input', () => {
+        if (topicInput.value.trim()) {
+          document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+          selectedCategory = null;
+        }
       });
 
       resetBtn.addEventListener('click', () => {
         topicInput.value = '';
+        selectedCategory = null;
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
         resultSection.classList.add('hidden-state');
         inputSection.classList.remove('hidden-state');
         inputSection.classList.add('fade-in');
@@ -239,14 +350,13 @@
       });
 
       function processGeneration() {
-        const topic = topicInput.value.trim();
+        const topic = topicInput.value.trim() || selectedCategory;
         if (!topic) {
-          topicInput.classList.add('border-red-500', 'ring-red-500');
-          setTimeout(() => topicInput.classList.remove('border-red-500', 'ring-red-500'), 1000);
+          topicInput.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+          setTimeout(() => topicInput.classList.remove('border-red-500', 'ring-1', 'ring-red-500'), 1200);
           return;
         }
 
-        // Switch to loading
         inputSection.classList.add('hidden-state');
         loadingSection.classList.remove('hidden-state');
         
@@ -255,44 +365,81 @@
         const msgInterval = setInterval(() => {
           msgIndex = (msgIndex + 1) % loadingMessages.length;
           loadingText.innerText = loadingMessages[msgIndex];
-        }, 600);
+        }, 500);
 
-        // Fake AI processing delay
         setTimeout(() => {
           clearInterval(msgInterval);
           loadingSection.classList.add('hidden-state');
           showResults(topic);
-        }, 2500);
+        }, 2800);
       }
 
       function showResults(topic) {
-        displayTopic.innerText = topic;
+        displayTopic.innerText = topic + " Training Course";
         
-        // Mock data logic tailored to a "Training Center"
         const modules = [
           {
             title: `Phase 1: Foundations of ${topic}`,
-            duration: "Day 1-2",
-            lessons: ["Introduction & Key Concepts", "Industry Standards & Frameworks", "Initial Assessment"]
+            duration: "Day 1",
+            icon: "📘",
+            lessons: [
+              "Introduction, Welcome & Course Overview",
+              "Core Terminology & Industry Frameworks",
+              "Initial Competency Assessment"
+            ]
           },
           {
-            title: "Phase 2: Strategic Application",
-            duration: "Day 3-4",
-            lessons: ["Real-world Case Studies", "Best Practices Implementation", "Interactive Workshops"]
+            title: "Phase 2: Core Concepts & Methodologies",
+            duration: "Day 2",
+            icon: "📊",
+            lessons: [
+              "International Standards & Best Practices",
+              "Analytical Tools & Techniques",
+              "Guided Group Workshop"
+            ]
           },
           {
-            title: "Phase 3: Mastery & Certification",
+            title: "Phase 3: Strategic Application",
+            duration: "Day 3",
+            icon: "🎯",
+            lessons: [
+              "Real-world Case Studies (Dubai / Amman / Istanbul)",
+              "Process Implementation Strategies",
+              "Interactive Problem-Solving Session"
+            ]
+          },
+          {
+            title: "Phase 4: Advanced Topics & Innovation",
+            duration: "Day 4",
+            icon: "🚀",
+            lessons: [
+              "Emerging Trends & Digital Transformation",
+              "Leadership in Practice",
+              "Cross-functional Team Simulation"
+            ]
+          },
+          {
+            title: "Phase 5: Certification & Graduation",
             duration: "Day 5",
-            lessons: ["Final Project Development", "Performance Evaluation", "Certification Readiness"]
+            icon: "🏆",
+            lessons: [
+              "Final Project Presentation",
+              "Comprehensive Evaluation & Assessment",
+              "Certificate of Completion Ceremony"
+            ]
           }
         ];
+
+        let totalLessons = modules.reduce((acc, m) => acc + m.lessons.length, 0);
+        document.getElementById('stat-modules').textContent = modules.length;
+        document.getElementById('stat-lessons').textContent = totalLessons;
 
         modulesContainer.innerHTML = '';
         
         modules.forEach((mod, idx) => {
           const modEl = document.createElement('div');
           modEl.className = 'roadmap-node fade-in';
-          modEl.style.animationDelay = `${idx * 0.15}s`;
+          modEl.style.animationDelay = `${idx * 0.12}s`;
           
           let lessonsHtml = mod.lessons.map(lesson => `
             <li class="flex items-start text-gray-300 text-sm">
@@ -302,10 +449,12 @@
           `).join('');
 
           modEl.innerHTML = `
-            <div class="bg-[#1a1a1a] border border-gray-800 rounded p-5 hover:border-bigben-gold/50 transition-colors ml-4">
+            <div class="bg-[#1a1a1a] border border-gray-800 rounded p-5 hover:border-bigben-gold/50 transition-all duration-300 ml-2">
               <div class="flex justify-between items-start mb-3">
-                <h3 class="text-lg font-serif font-bold text-white">${mod.title}</h3>
-                <span class="text-xs font-bold uppercase tracking-wider text-black bg-bigben-gold px-2 py-1 rounded-sm">${mod.duration}</span>
+                <h3 class="text-base md:text-lg font-serif font-bold text-white flex items-center gap-2">
+                  <span class="text-xl">${mod.icon}</span> ${mod.title}
+                </h3>
+                <span class="text-xs font-bold uppercase tracking-wider text-black bg-bigben-gold px-2.5 py-1 rounded-sm shrink-0 ml-3">${mod.duration}</span>
               </div>
               <ul class="space-y-2 mt-4 border-t border-gray-800 pt-3">${lessonsHtml}</ul>
             </div>
